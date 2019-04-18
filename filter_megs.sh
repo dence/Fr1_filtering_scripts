@@ -22,7 +22,7 @@ NEW_FILTERED_VCF="Fr1_megs.merged.freebayes.deconvoluted.filtered_missing_indvs_
 cat header $FILTERED_DATA > $NEW_FILTERED_VCF 
 
 NEW_FILTERED_GZVCF="Fr1_megs.merged.freebayes.deconvoluted.filtered_missing_indvs_allele_freqs_minDP_5_maxDP_100_only_biallel.filtered_segregation.vcf.gz"
-bgzip -c $NEW_FILTERED_VCF > $NEW_FILTERED_GZVCF
+(grep ^"#" $NEW_FILTERED_VCF; grep -v ^"#" $NEW_FILTERED_VCF | sort -k1,1 -k2,2n) | bgzip > $NEW_FILTERED_GZVCF;
 tabix -p vcf $NEW_FILTERED_GZVCF
 cp *.vcf.gz *.vcf.gz.tbi megs.indvs_more_than_0.2_missing.txt *vcf $DATA_DIR 
 #clean up temp files
